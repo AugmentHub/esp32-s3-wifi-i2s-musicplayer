@@ -13,6 +13,28 @@ import busio
 import sdcardio
 import storage
 
+import audiocore
+import board
+import audiobusio
+import audiomixer
+import time
+
+#STARTUP TONE
+# audio = audiobusio.I2SOut(board.IO1, board.IO2, board.IO3)
+# music = audiocore.WaveFile(open("/startup.wav", "rb"))
+# mixer = audiomixer.Mixer(voice_count=1, sample_rate=16000, channel_count=1,
+#                          bits_per_sample=16, samples_signed=True)
+# mixer = audiomixer.Mixer(voice_count=1, sample_rate=16000, channel_count=1, bits_per_sample=16, samples_signed=True)  
+# mixer.voice[0].level = 1
+
+# print("playing")
+# # Have AudioOut play our Mixer source
+# audio.play(mixer)
+# # Play the first sample voice
+# mixer.voice[0].play(music)
+# while mixer.playing:
+#   time.sleep(1)
+
 # Use the board's primary SPI bus
 # spi = board.IO
 # Or, use an SPI bus on specific pins:
@@ -64,7 +86,7 @@ else:
 pool = socketpool.SocketPool(wifi.radio)
 requests = adafruit_requests.Session(pool, ssl.create_default_context())
 
-response = requests.get("https://www.dubov.ski/s/siren.wav", stream=True )
+response = requests.get("https://youtube-converter.replit.app/ltTUxU1QoZM", stream=True )
 
 
 with open("/sd/cashmoneybuckets.wav", "wb") as f:
@@ -104,11 +126,6 @@ with open("/sd/cashmoneybuckets.wav", "wb") as f:
 # print(f"CircuitPython GitHub Stars: {response.json()['stargazers_count']}")
 # print("-" * 40)
 
-import audiocore
-import board
-import audiobusio
-import audiomixer
-import time
 
 audio = audiobusio.I2SOut(board.IO1, board.IO2, board.IO3)
 music = audiocore.WaveFile(open("/sd/cashmoneybuckets.wav", "rb"))
