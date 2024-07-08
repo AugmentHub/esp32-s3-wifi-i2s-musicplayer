@@ -1,7 +1,13 @@
 # CircuitPython ESP32-S3 WiFi I2S Music Player
 
+
+https://github.com/AugmentHub/esp32-s3-wifi-i2s-musicplayer/assets/67584672/19ced911-41e9-40ca-800d-fa1d75753e11
+
+
 ## Overview
 This project connects to a WiFi network, downloads an .wav from a URL, and plays the .wav on a speaker with the [ESP32 Xiao S3 from SEEED Studio](https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/).
+
+## Steps
 
 0. The contents of the CIRCUITPY folder in this repo can be placed on an ESP32-S3.
 
