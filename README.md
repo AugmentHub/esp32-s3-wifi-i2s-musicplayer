@@ -3,7 +3,7 @@
 ## Overview
 This project connects to a WiFi network, downloads an .wav from a URL, and plays the .wav on a speaker with the [ESP32 Xiao S3 from SEEED Studio](https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/).
 
-[![This is a demo video of the first prototype.](https://github.com/AugmentHub/esp32-s3-wifi-i2s-musicplayer/blob/b09ceb14060484af4d2f5885600bc56aaff7a363/demo_video.mp3)
+[![This is a demo video of the first prototype.](https://github.com/AugmentHub/esp32-s3-wifi-i2s-musicplayer/blob/b09ceb14060484af4d2f5885600bc56aaff7a363/demo_video.mp3)]
 
 ## Steps
 
