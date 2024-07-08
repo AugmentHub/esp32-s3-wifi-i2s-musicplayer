@@ -12,6 +12,8 @@ import board
 import busio
 import sdcardio
 import storage
+from analogio import AnalogIn
+from digitalio import DigitalInOut, Direction, Pull 
 
 import audiocore
 import board
@@ -34,6 +36,18 @@ import time
 # mixer.voice[0].play(music)
 # while mixer.playing:
 #   time.sleep(1)
+
+# Defining button & Pot pin
+BUTTON_PIN = board.IO4
+SWITCH_PIN = board.IO5
+
+# Setting up the switch for switching between songs.
+switch= AnalogIn(SWITCH_PIN) 
+
+# Setting up the button to start and stop a song.
+button = DigitalInOut(BUTTON_PIN)
+button.direction = Direction.INPUT
+button.pullup = Pull.UP
 
 # Use the board's primary SPI bus
 # spi = board.IO
@@ -86,8 +100,7 @@ else:
 pool = socketpool.SocketPool(wifi.radio)
 requests = adafruit_requests.Session(pool, ssl.create_default_context())
 
-response = requests.get("https://youtube-converter.replit.app/ltTUxU1QoZM", stream=True )
-
+response = requests.get("https://youtube-converter.replit.app/Ym8JURyCNXk", stream=True)
 
 with open("/sd/cashmoneybuckets.wav", "wb") as f:
     # print(f"Fetching data from https://www.dubov.ski/s/siren.wav")
@@ -128,19 +141,40 @@ with open("/sd/cashmoneybuckets.wav", "wb") as f:
 
 
 audio = audiobusio.I2SOut(board.IO1, board.IO2, board.IO3)
-music = audiocore.WaveFile(open("/sd/cashmoneybuckets.wav", "rb"))
-mixer = audiomixer.Mixer(voice_count=1, sample_rate=16000, channel_count=1,
-                         bits_per_sample=16, samples_signed=True)
-mixer = audiomixer.Mixer(voice_count=1, sample_rate=16000, channel_count=1, bits_per_sample=16, samples_signed=True)  
-mixer.voice[0].level = .3
 
-print("playing")
-# Have AudioOut play our Mixer source
-audio.play(mixer)
-# Play the first sample voice
-mixer.voice[0].play(music)
-while mixer.playing:
-  time.sleep(1)
-print("stopped")
+song = 0 # defaulting to the first song.
 
-print("Done")
+playing = True
+# Creating the loop
+
+while True:
+    # Assuming that the ESP32 reads analog numbers from 0 to 4096
+    if switch.value % 4:
+        song = switch.value / 1024 # Continuously reading in the values
+    else: 
+        song = switch.value % 4 if os.path.exists(f"/sd/{song}.wav") else 0 # Checking that the path exists, otherwise defaulting to 0
+    
+    path = f"/sd/{song}.wav"
+    
+    music = audiocore.WaveFile(open(path, "rb"))
+    mixer = audiomixer.Mixer(voice_count=1, sample_rate=16000, channel_count=1,
+                            bits_per_sample=16, samples_signed=True)
+    mixer = audiomixer.Mixer(voice_count=1, sample_rate=16000, channel_count=1, bits_per_sample=16, samples_signed=True)  
+    mixer.voice[0].level = 1 # setting the volume, can be adjusted manually through the potentiometer.
+    # audio.play(mixer)
+    if button.value: 
+        playing != playing
+    # Have AudioOut play our Mixer source
+    if playing: 
+        audio.play(mixer)
+            # Play the first sample voice
+        mixer.voice[0].play(music)
+        while mixer.playing:
+            time.sleep(1)
+            print("stopped")
+    else:
+        print("playing")
+        audio.stop()
+        mixer.voice[0].stop(music)
+
+    print("Done")
