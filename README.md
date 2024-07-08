@@ -3,6 +3,10 @@
 ## Overview
 This project connects to a WiFi network, downloads an .wav from a URL, and plays the .wav on a speaker with the [ESP32 Xiao S3 from SEEED Studio](https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/).
 
+[![This is a demo video of the first prototype.](https://github.com/AugmentHub/esp32-s3-wifi-i2s-musicplayer/blob/b09ceb14060484af4d2f5885600bc56aaff7a363/demo_video.mp3)
+
+## Steps
+
 0. The contents of the CIRCUITPY folder in this repo can be placed on an ESP32-S3.
 
 1. The WiFi login credentials are set in a /CIRCUITPY/settings.toml file (you need to provide it, not included in this repo). Details ![here](https://learn.adafruit.com/adafruit-esp32-s3-feather/circuitpython-internet-test).
